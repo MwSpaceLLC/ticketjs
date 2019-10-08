@@ -30,42 +30,31 @@
                 </div>
                 <!-- Navbar items -->
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <router-link class="nav-link nav-link-icon" to="/">
-                            <i class="ni ni-planet"></i>
-                            <span class="nav-link-inner--text">Dashboard</span>
-                        </router-link>
-                    </li>
+
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/register">
                             <i class="ni ni-circle-08"></i>
-                            <span class="nav-link-inner--text">Register</span>
+                            <span class="nav-link-inner--text">Registrati</span>
                         </router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link nav-link-icon" to="/login">
                             <i class="ni ni-key-25"></i>
-                            <span class="nav-link-inner--text">Login</span>
+                            <span class="nav-link-inner--text">Accedi</span>
                         </router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link nav-link-icon" to="/profile">
-                            <i class="ni ni-single-02"></i>
-                            <span class="nav-link-inner--text">Profile</span>
-                        </router-link>
-                    </li>
+
                 </ul>
             </template>
         </base-nav>
         <!-- Header -->
         <div class="header bg-gradient-success py-7 py-lg-8">
             <div class="container">
-                <div class="header-body text-center mb-7">
+                <div class="header-body text-center mb-3">
                     <div class="row justify-content-center">
                         <div class="col-lg-5 col-md-6">
-                            <h1 class="text-white">Welcome!</h1>
-                            <p class="text-lead text-white">Use these awesome forms to login or create new account in
-                                your project for free.</p>
+                            <h1 class="text-white">Benvenuto!</h1>
+                            <p class="text-lead text-white">Usa questo sistema di Ticketing per soddisfare il corretto flusso di lavoro per la tua attivita'</p>
                         </div>
                     </div>
                 </div>
@@ -101,11 +90,7 @@
                                 <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
                             </li>
                             <li class="nav-item">
-                                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About
-                                    Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                                <a href="https://www.mwspace.com" class="nav-link" target="_blank">MwSpace LLC</a>
                             </li>
                             <li class="nav-item">
                                 <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"

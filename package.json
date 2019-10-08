@@ -1,5 +1,5 @@
 {
-  "name": "ticketjs-client",
+  "name": "ticketjs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -27,8 +27,10 @@
     "vue-chartjs": "3.4.2",
     "vue-clipboard2": "0.3.0",
     "vue-flatpickr-component": "8.1.2",
+    "vue-password-strength-meter": "^1.5.0",
     "vue-router": "3.0.1",
-    "vue2-transitions": "0.3.0"
+    "vue2-transitions": "0.3.0",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",

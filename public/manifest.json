@@ -1,6 +1,6 @@
 {
-  "name": "vue-argon-dashboard",
-  "short_name": "vue-argon-dashboard",
+  "name": "ticketjs",
+  "short_name": "ticketjs",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",

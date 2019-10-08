@@ -20,10 +20,21 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
+import Axios from 'axios'
+import config from "./config";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+Vue.prototype.$http = Axios;
+
+var domain = config.SSL ? 'https' : 'http';
+domain += `://${window.location.hostname}:${config.SRV_PORT}`;
+Vue.prototype.$api = domain;
+
+console.log(config);
 
 Vue.use(ArgonDashboard)
+
 new Vue({
     router,
     render: h => h(App)

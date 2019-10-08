@@ -1,70 +1,88 @@
 <template>
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0">
-                    <div class="card-header bg-transparent pb-5">
-                        <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
-                        <div class="btn-wrapper text-center">
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="img/icons/common/github.svg"></span>
-                                <span class="btn-inner--text">Github</span>
-                            </a>
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="img/icons/common/google.svg"></span>
-                                <span class="btn-inner--text">Google</span>
-                            </a>
-                        </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <div class="text-center text-muted mb-4">
+                        <small>Inserisci le credenziali per accedere al sistema</small>
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>Or sign in with credentials</small>
-                        </div>
-                        <form role="form">
-                            <base-input class="input-group-alternative mb-3"
-                                        placeholder="Email"
-                                        addon-left-icon="ni ni-email-83"
-                                        v-model="model.email">
-                            </base-input>
+                    <form role="form">
+                        <base-input class="input-group-alternative mb-3"
+                                    placeholder="Email"
+                                    addon-left-icon="ni ni-email-83"
+                                    v-model="model.email">
+                        </base-input>
 
-                            <base-input class="input-group-alternative"
-                                        placeholder="Password"
-                                        type="password"
-                                        addon-left-icon="ni ni-lock-circle-open"
-                                        v-model="model.password">
-                            </base-input>
+                        <base-input class="input-group-alternative"
+                                    placeholder="Password"
+                                    type="password"
+                                    addon-left-icon="ni ni-lock-circle-open"
+                                    v-model="model.password">
+                        </base-input>
 
-                            <base-checkbox class="custom-control-alternative">
-                                <span class="text-muted">Remember me</span>
-                            </base-checkbox>
-                            <div class="text-center">
-                                <base-button type="primary" class="my-4">Sign in</base-button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <a href="#" class="text-light"><small>Forgot password?</small></a>
-                    </div>
-                    <div class="col-6 text-right">
-                        <router-link to="/register" class="text-light"><small>Create new account</small></router-link>
-                    </div>
+                        <base-checkbox class="custom-control-alternative">
+                            <span class="text-muted">Remember me</span>
+                        </base-checkbox>
+                        <div class="text-center">
+                            <base-button @click="handleSubmit" type="primary" class="my-4">Accedi al sistema</base-button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 </template>
 <script>
-  export default {
-    name: 'login',
-    data() {
-      return {
-        model: {
-          email: '',
-          password: ''
+    export default {
+        name: 'login',
+        data() {
+            return {
+                model: {
+                    email: '',
+                    password: ''
+                }
+            }
+        },
+        methods: {
+            handleSubmit(e) {
+                e.preventDefault();
+
+                if (this.password === this.password_confirm && this.password.length > 0) {
+
+                    this.$http.post(`${this.$api}/register`, {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                        is_admin: this.is_admin
+                    })
+                        .then(response => {
+                            localStorage.setItem('user', JSON.stringify(response.data.user));
+                            localStorage.setItem('jwt', response.data.token);
+
+                            if (localStorage.getItem('jwt') != null) {
+
+                                this.$emit('loggedIn');
+
+                                if (this.$route.params.nextUrl != null) {
+                                    this.$router.push(this.$route.params.nextUrl)
+                                } else {
+                                    this.$router.push('/')
+                                }
+
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                } else {
+                    this.password = "";
+                    this.passwordConfirm = "";
+
+                    return alert("Passwords do not match")
+                }
+            }
         }
-      }
     }
-  }
 </script>
 <style>
 </style>

@@ -4,17 +4,21 @@ const sqlite3 = require('sqlite3').verbose();
 class Db {
     constructor(file) {
         this.db = new sqlite3.Database(file);
+        this.dropTable()
         this.createTable()
     }
 
     createTable() {
-        const sql = `
+        var sql = `
             CREATE TABLE IF NOT EXISTS user (
                 id integer PRIMARY KEY, 
-                name text, 
                 email text UNIQUE, 
-                user_pass text,
-                is_admin integer)`
+                password text)`
+        return this.db.run(sql);
+    }
+
+    dropTable() {
+        var sql = "DROP TABLE IF EXISTS user";
         return this.db.run(sql);
     }
 
@@ -49,4 +53,4 @@ class Db {
     }
 }
 
-module.exports = Db
+module.exports = Db;
