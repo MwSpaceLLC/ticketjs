@@ -11,11 +11,12 @@
 
                         <base-input class="input-group-alternative mb-3"
                                     placeholder="Email"
+                                    type="email"
                                     addon-left-icon="ni ni-email-83"
                                     v-model="model.email">
                         </base-input>
 
-                        <password class="input-group-alternative"
+                        <password id="password" class="input-group-alternative"
                                   placeholder="Password"
                                   type="password"
                                   addon-left-icon="ni ni-lock-circle-open"
@@ -24,7 +25,7 @@
 
                         <base-input class="input-group-alternative"
                                     placeholder="Confirm Password"
-                                    type="text"
+                                    type="password"
                                     addon-left-icon="ni ni-lock-circle-open"
                                     v-model="model.password_confirm">
                         </base-input>
@@ -36,8 +37,14 @@
                                     v-model="model.passcode">
                         </base-input>
 
-                        <div class="text-center">
-                            <base-button @click="handleSubmit" type="primary" class="my-4">Registrati nel sistema</base-button>
+                        <div class="row">
+                            <base-button @click="switchHide" type="success" class="col-md-8">
+                                Mostra / Nascondi
+                                <i class="ni ni-lock-circle-open"></i>
+                            </base-button>
+                            <base-button @click="handleSubmit" type="primary" class="col">
+                                Registrati
+                            </base-button>
                         </div>
                     </form>
                 </div>
@@ -55,7 +62,6 @@
         data() {
             return {
                 model: {
-                    name: '',
                     email: '',
                     password: '',
                     password_confirm: '',
@@ -64,16 +70,33 @@
             }
         },
         methods: {
+            switchHide() {
+                var item = document.getElementById('password');
+                item.getAttribute('type') === 'password' ?
+                    item.setAttribute('type', 'text') : item.setAttribute('type', 'password');
+            },
             handleSubmit(e) {
                 e.preventDefault();
 
-                if (this.password === this.password_confirm && this.password.length > 0) {
+                if (this.model.email.length > 0 &&
+                    this.model.password.length > 0 &&
+                    this.model.password_confirm.length > 0 &&
+                    this.model.passcode.length > 0) {
+
+                    if (this.model.password !== this.model.password_confirm) {
+                        return this.$notify({
+                            type: 'warn',
+                            text: 'Le password non combaciano',
+                        });
+                    }
+
+                    this.$InLoading = true;
 
                     this.$http.post(`${this.$api}/register`, {
-                        name: this.name,
-                        email: this.email,
-                        password: this.password,
-                        is_admin: this.is_admin
+                        name: this.model.name,
+                        email: this.model.email,
+                        password: this.model.password,
+                        passcode: this.model.passcode
                     })
                         .then(response => {
                             localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -92,13 +115,33 @@
                             }
                         })
                         .catch(error => {
-                            console.error(error);
+                            this.$InLoading = false;
+
+                            if(error.response){
+                                return this.$notify({
+                                    type: 'error',
+                                    title: error.response.statusText,
+                                    text: error.response.data,
+                                });
+                            }
+
+                            return this.$notify({
+                                type: 'error',
+                                text: error,
+                            });
+
                         });
                 } else {
                     this.password = "";
                     this.passwordConfirm = "";
 
-                    return alert("Passwords do not match")
+                    this.$InLoading = false;
+
+                    return this.$notify({
+                        type: 'warn',
+                        text: 'I campi sono obbligatori',
+                    });
+
                 }
             }
         }

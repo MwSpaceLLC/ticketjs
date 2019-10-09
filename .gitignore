@@ -24,4 +24,4 @@ yarn-error.log*
 *.sw*
 
 # Sqlite DB
-sqlitedb
+/server/sqlite/sqlitedb

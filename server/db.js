@@ -1,55 +1,41 @@
 "use strict";
-const sqlite3 = require('sqlite3').verbose();
+const dotenv = require('dotenv').config();
+const mysql = require('mysql');
 
 class Db {
-    constructor(file) {
-        this.db = new sqlite3.Database(file);
-        this.dropTable()
-        this.createTable()
-    }
+    constructor() {
+        this.db = mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
+            port: process.env.DB_PORT
+        });
 
-    createTable() {
-        var sql = `
-            CREATE TABLE IF NOT EXISTS user (
-                id integer PRIMARY KEY, 
-                email text UNIQUE, 
-                password text)`
-        return this.db.run(sql);
-    }
-
-    dropTable() {
-        var sql = "DROP TABLE IF EXISTS user";
-        return this.db.run(sql);
+        /**
+         * Try to connect DB
+         */
+        this.db.connect(function (err) {
+            if (err) {
+                return console.error('error connecting: ' + err.stack);
+            }
+        });
     }
 
     selectByEmail(email, callback) {
-        return this.db.get(
-            `SELECT * FROM user WHERE email = ?`,
-            [email],function(err,row){
-                callback(err,row)
-            })
-    }
+        return this.db.query('SELECT * FROM users WHERE email = ?', email, (error, results) => {
+            if (error) console.log(error);
 
-    insertAdmin(user, callback) {
-        return this.db.run(
-            'INSERT INTO user (name,email,user_pass,is_admin) VALUES (?,?,?,?)',
-            user, (err) => {
-                callback(err)
-            })
-    }
-
-    selectAll(callback) {
-        return this.db.all(`SELECT * FROM user`, function(err,rows){
-            callback(err,rows)
-        })
+            return callback(error, results);
+        });
     }
 
     insert(user, callback) {
-        return this.db.run(
-            'INSERT INTO user (name,email,user_pass) VALUES (?,?,?)',
-            user, (err) => {
-                callback(err)
-            })
+        return this.db.query('INSERT INTO users (email,password) VALUES (?,?)', user, (error, results) => {
+            if (error) console.log(error);
+
+            return callback(error, results);
+        });
     }
 }
 

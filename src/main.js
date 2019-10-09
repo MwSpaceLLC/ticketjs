@@ -22,20 +22,23 @@ import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
 import Axios from 'axios'
 import config from "./config";
+import Notifications from 'vue-notification'
+
+Vue.use(Notifications);
 
 Vue.config.productionTip = false;
 
 Vue.prototype.$http = Axios;
 
-var domain = config.SSL ? 'https' : 'http';
+var domain = config.SSL === 'true' ? 'https' : 'http';
 domain += `://${window.location.hostname}:${config.SRV_PORT}`;
 Vue.prototype.$api = domain;
 
-console.log(config);
+Vue.prototype.$InLoading = false;
 
-Vue.use(ArgonDashboard)
+Vue.use(ArgonDashboard);
 
 new Vue({
     router,
     render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');

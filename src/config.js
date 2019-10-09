@@ -1,5 +1,5 @@
 var config = {
-    SRV_PORT: 3010,
+    SRV_PORT: process.env.VUE_APP_SRVPORT,
     SSL: process.env.VUE_APP_SSL,
 
     DENY: process.env.VUE_APP_ALLOWDENY,

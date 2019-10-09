@@ -41,8 +41,8 @@ let router = new Router({
                     component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
                 },
                 {
-                    path: '/tables',
-                    name: 'tables',
+                    path: '/awaits',
+                    name: 'awaits',
                     component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
                 }
             ]

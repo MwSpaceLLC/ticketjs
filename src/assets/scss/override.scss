@@ -6,3 +6,25 @@
 html {
   background: #172b4d;
 }
+
+.vue-notification {
+  margin: 10px!important;
+  border-radius: .3rem;
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  zoom: 1.2;
+}
+
+.alert.server {
+  top: 0;
+  left: 0;
+  width: auto;
+  z-index: 999;
+  margin: 10px;
+  position: fixed;
+
+  .alert-inner--icon{
+    padding: 10px;
+  }
+
+}

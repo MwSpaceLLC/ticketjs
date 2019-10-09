@@ -10,6 +10,5 @@ export default {
     Vue.use(globalComponents);
     Vue.use(globalDirectives);
     Vue.use(SidebarPlugin);
-    Vue.use(NotificationPlugin);
   }
 };
