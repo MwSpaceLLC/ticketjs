@@ -36,6 +36,14 @@ Vue.prototype.$api = domain;
 
 Vue.prototype.$InLoading = false;
 
+/**
+ * Create session user local
+ * @type {any}
+ */
+var user = localStorage.getItem('user');
+if (user)
+    Vue.prototype.$user = JSON.parse(user);
+
 Vue.use(ArgonDashboard);
 
 new Vue({

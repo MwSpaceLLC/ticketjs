@@ -26,7 +26,7 @@ class Db {
         return this.db.query('SELECT * FROM users WHERE email = ?', email, (error, results) => {
             if (error) console.log(error);
 
-            return callback(error, results);
+            return callback(error, results[0]);
         });
     }
 

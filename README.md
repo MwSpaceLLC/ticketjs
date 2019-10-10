@@ -16,6 +16,7 @@ see [Old Php Version](https://github.com/MwSpaceLLC/tickets)
 This repo NOT stable
 
 ### 🛒 Requirement
+- Yarn Manager
 - Nodejs server pract
 - Vuejs Frontend pract
 - MySql Datasource pract
@@ -33,9 +34,13 @@ The ticketJs is open-source software licensed under the [MIT license](https://op
 ### ⌨ First Install ?
 
 1) Set all field in *.env* file
-2) Import sql structure from [dbdiagram.io](https://dbdiagram.io/d/5d9e2b9bff5115114db51501)
+2) Import latest relese sql structure from [dbdiagram.io](https://dbdiagram.io/d/5d9e2b9bff5115114db51501)
 
-        enjoy -_-
+        yarn install
+        
+        yarn server
+
+        yarn dev
     
 ### 🔫 Trick & Knows
 

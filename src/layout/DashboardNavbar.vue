@@ -17,10 +17,10 @@
                 <base-dropdown class="nav-link pr-0">
                     <div class="media align-items-center" slot="title">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg">
+                  <img alt="Image placeholder" src="/img/theme/team-4-800x800.jpg">
                 </span>
                         <div class="media-body ml-2 d-none d-lg-block">
-                            <span class="mb-0 text-sm  font-weight-bold">Jessica Jones</span>
+                            <span class="mb-0 text-sm  font-weight-bold">{{this.$user.email}}</span>
                         </div>
                     </div>
 
@@ -45,10 +45,10 @@
                             <span>Support</span>
                         </router-link>
                         <div class="dropdown-divider"></div>
-                        <router-link to="/profile" class="dropdown-item">
+                        <span @click="logout" class="cursor-pointer dropdown-item">
                             <i class="ni ni-user-run"></i>
                             <span>Logout</span>
-                        </router-link>
+                        </span>
                     </template>
                 </base-dropdown>
             </li>
@@ -56,24 +56,28 @@
     </base-nav>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        activeNotifications: false,
-        showMenu: false,
-        searchQuery: ''
-      };
-    },
-    methods: {
-      toggleSidebar() {
-        this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
-      },
-      hideSidebar() {
-        this.$sidebar.displaySidebar(false);
-      },
-      toggleMenu() {
-        this.showMenu = !this.showMenu;
-      }
-    }
-  };
+    export default {
+        data() {
+            return {
+                activeNotifications: false,
+                showMenu: false,
+                searchQuery: ''
+            };
+        },
+        methods: {
+            logout() {
+                localStorage.clear();
+                this.$router.push('/login')
+            },
+            toggleSidebar() {
+                this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+            },
+            hideSidebar() {
+                this.$sidebar.displaySidebar(false);
+            },
+            toggleMenu() {
+                this.showMenu = !this.showMenu;
+            }
+        }
+    };
 </script>

@@ -1,6 +1,6 @@
 .Password__field {
-  background-color: white!important;
-  border: transparent!important;
+  background-color: white !important;
+  border: transparent !important;
 }
 
 html {
@@ -8,7 +8,7 @@ html {
 }
 
 .vue-notification {
-  margin: 10px!important;
+  margin: 10px !important;
   border-radius: .3rem;
   -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -23,8 +23,33 @@ html {
   margin: 10px;
   position: fixed;
 
-  .alert-inner--icon{
+  .alert-inner--icon {
     padding: 10px;
   }
 
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 10rem;
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(87deg, #2dce89, #2dcecc) !important;
+}
+
+html {
+  background: linear-gradient(87deg, #2dce89, #2dcecc) !important;
+}
+
+.ticket-reply{
+  border-radius: .3rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }

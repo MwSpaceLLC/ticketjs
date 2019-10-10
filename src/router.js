@@ -25,26 +25,38 @@ let router = new Router({
                     // which is lazy-loaded when the route is visited.
                     component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
                 },
+
                 {
-                    path: '/icons',
-                    name: 'icons',
-                    component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
+                    path: '/ticket/:id',
+                    name: 'aperti',
+                    component: () => import(/* webpackChunkName: "demo" */ './views/Ticket.vue')
+                },
+
+                {
+                    path: '/aperti',
+                    name: 'aperti',
+                    component: () => import(/* webpackChunkName: "demo" */ './views/Aperti.vue')
                 },
                 {
-                    path: '/profile',
-                    name: 'profile',
-                    component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
+                    path: '/ricevuti',
+                    name: 'ricevuti',
+                    component: () => import(/* webpackChunkName: "demo" */ './views/Ricevuti.vue')
                 },
                 {
-                    path: '/maps',
-                    name: 'maps',
-                    component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
+                    path: '/scaduti',
+                    name: 'scaduti',
+                    component: () => import(/* webpackChunkName: "demo" */ './views/Scaduti.vue')
                 },
                 {
-                    path: '/awaits',
-                    name: 'awaits',
-                    component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
-                }
+                    path: '/chiusi',
+                    name: 'chiusi',
+                    component: () => import(/* webpackChunkName: "demo" */ './views/Chiusi.vue')
+                },
+                {
+                    path: '/collezione',
+                    name: 'collezione',
+                    component: () => import(/* webpackChunkName: "demo" */ './views/Collezione.vue')
+                },
             ]
         },
         {
@@ -66,6 +78,12 @@ let router = new Router({
                     component: () => import(/* webpackChunkName: "demo" */ './views/Register.vue')
                 }
             ]
+        },
+
+        {
+            path: '*',
+            name: 'notfound',
+            component: () => import(/* webpackChunkName: "demo" */ './views/Notfound.vue')
         }
     ]
 })

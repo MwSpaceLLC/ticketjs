@@ -62,10 +62,10 @@ router.post('/register', function (req, res) {
 });
 
 router.post('/login', (req, res) => {
-    db.selectByEmail(req.body.email, (err, results) => {
+    db.selectByEmail(req.body.email, (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
 
-        if (results.length === 0) return res.status(403).send('Utente non trovato nei nostri sistemi');
+        if (user.length === 0) return res.status(403).send('Utente non trovato nei nostri sistemi');
 
         let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 

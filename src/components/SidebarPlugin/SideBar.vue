@@ -82,69 +82,69 @@
                 <!--Divider-->
                 <hr class="my-3">
                 <!--Heading-->
-                <h6 class="navbar-heading text-muted">Documentation</h6>
+                <h6 class="navbar-heading text-muted">Link di Sistema</h6>
                 <!--Navigation-->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation">
-                            <i class="ni ni-spaceship"></i> Getting started
-                        </a>
+                        <router-link class="nav-link"
+                           to="/pagamenti">
+                            <i class="ni ni-favourite-28"></i> Crediti
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation/foundation/colors.html">
-                            <i class="ni ni-palette"></i> Foundation
-                        </a>
+                        <router-link class="nav-link"
+                                     to="/pagamenti">
+                            <i class="ni ni-credit-card"></i> Pagamenti
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                           href="https://demos.creative-tim.com/vue-argon-dashboard/documentation/components/alerts.html">
-                            <i class="ni ni-ui-04"></i> Components
-                        </a>
+                        <router-link class="nav-link"
+                           to="/esperienza">
+                            <i class="ni ni-hat-3"></i> Esperienza
+                        </router-link>
                     </li>
                 </ul>
             </div>
-            </div>
+        </div>
     </nav>
 </template>
 <script>
-  import NavbarToggleButton from '@/components/NavbarToggleButton'
+    import NavbarToggleButton from '@/components/NavbarToggleButton'
 
-  export default {
-    name: 'sidebar',
-    components: {
-      NavbarToggleButton
-    },
-    props: {
-      logo: {
-        type: String,
-        default: 'img/brand/green.png',
-        description: 'Sidebar app logo'
-      },
-      autoClose: {
-        type: Boolean,
-        default: true,
-        description: 'Whether sidebar should autoclose on mobile when clicking an item'
-      }
-    },
-    provide() {
-      return {
-        autoClose: this.autoClose
-      };
-    },
-    methods: {
-      closeSidebar() {
-        this.$sidebar.displaySidebar(false)
-      },
-      showSidebar() {
-        this.$sidebar.displaySidebar(true)
-      }
-    },
-    beforeDestroy() {
-      if (this.$sidebar.showSidebar) {
-        this.$sidebar.showSidebar = false;
-      }
-    }
-  };
+    export default {
+        name: 'sidebar',
+        components: {
+            NavbarToggleButton
+        },
+        props: {
+            logo: {
+                type: String,
+                default: '/img/brand/green.png',
+                description: 'Sidebar app logo'
+            },
+            autoClose: {
+                type: Boolean,
+                default: true,
+                description: 'Whether sidebar should autoclose on mobile when clicking an item'
+            }
+        },
+        provide() {
+            return {
+                autoClose: this.autoClose
+            };
+        },
+        methods: {
+            closeSidebar() {
+                this.$sidebar.displaySidebar(false)
+            },
+            showSidebar() {
+                this.$sidebar.displaySidebar(true)
+            }
+        },
+        beforeDestroy() {
+            if (this.$sidebar.showSidebar) {
+                this.$sidebar.showSidebar = false;
+            }
+        }
+    };
 </script>
