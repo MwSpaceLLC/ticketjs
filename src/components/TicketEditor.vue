@@ -1,5 +1,5 @@
 <template>
-    <tinymce-editor :api-key="process.env." :init="config" v-model="content"></tinymce-editor>
+    <tinymce-editor :api-key="apikey" :init="config" v-model="content"></tinymce-editor>
 </template>
 
 <script>
@@ -8,11 +8,12 @@
     export default {
         data() {
             return {
+                apikey: process.env.VUE_APP_TINYMCE,
                 content: '',
-                config:{
+                config: {
                     plugins: 'paste',
                     paste_data_images: true,
-                    height : "450px",
+                    height: "450px",
                     resize: false
                 }
             }
