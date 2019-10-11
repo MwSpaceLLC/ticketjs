@@ -2,7 +2,7 @@
 
 
 ## About MwSpace
-MwSpace LLC is a most advanced brand for develop any idea e/o startup. Our business is to boost any company with our services (SASS, PASS, IASS).
+MwSpace LLC is a most advanced brand for develop any idea e/o startup. Our business is to boost any company with our services (SAAS, PAAS, IAAS).
 
 
 ### 🕹 Why ?
