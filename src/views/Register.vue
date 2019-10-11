@@ -112,6 +112,11 @@
                                     this.$router.push('/')
                                 }
 
+                                return this.$notify({
+                                    type: 'success',
+                                    text: `Benvenuto ${this.$user.email}`,
+                                });
+
                             }
                         })
                         .catch(error => {
@@ -148,8 +153,8 @@
     }
 </script>
 <style>
-    html,body {
-        background: #172b4d!important;
+    html, body {
+        background: #172b4d !important;
     }
 
 </style>

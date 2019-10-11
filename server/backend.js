@@ -17,14 +17,19 @@ router.use(bodyParser.json());
 
 // CORS middleware
 const allowCrossDomain = function (req, res, next) {
+
+// TODO must insert csrf protection
+// https://github.com/expressjs/csurf
+
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', '*');
     res.header('Access-Control-Allow-Headers', '*');
     next();
-}
+};
 
 app.use(allowCrossDomain);
 
+// TODO must refactoring
 
 router.get('/status', (req, res) => {
     res.status(200).send('server up');

@@ -102,6 +102,8 @@
         },
 
         mounted() {
+
+            // TODO implement method get axoix to download correct dataset
             console.log('search GET/: ' + this.search)
         },
 

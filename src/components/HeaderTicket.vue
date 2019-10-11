@@ -77,13 +77,16 @@
         },
         methods: {
             openTicket() {
-                console.log(this.ticket_id)
-                this.$ticketEditorActive = !this.$ticketEditorActive;
 
-                if (this.$ticketEditorActive)
-                    document.getElementById('reply-editor').classList.add('active');
+                // TODO make ticket management in localstorage
+                console.log('ticket select GET/: #' + this.ticket_id);
+
+                var teditor = document.getElementById('reply-editor');
+
+                if (teditor.classList.contains('active'))
+                    teditor.classList.remove('active');
                 else
-                    document.getElementById('reply-editor').classList.remove('active');
+                    teditor.classList.add('active');
             }
         }
     };

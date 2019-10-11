@@ -17,10 +17,6 @@
     export default {
         name: 'app',
         components: {ServerAlert, TicketEditor},
-        methods: {
-            postReply() {
-
-            }
-        }
+        methods: {}
     }
 </script>

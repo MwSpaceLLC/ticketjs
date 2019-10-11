@@ -92,18 +92,23 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
 
     /**
-     * Create session user local
-     * @type {any}
-     */
+     * Create session user local */
     var user = localStorage.getItem('user');
-    if (user)
+    if (user) {
         if (!Vue.prototype.$user)
             Vue.prototype.$user = JSON.parse(user);
 
-    /**
-     * Generic Routing Adjustment
-     * @type {any}
+    } else {/**
+     * User Destroy action
      */
+
+        /** Prevent close message*/
+        document.getElementById('reply-editor').classList.remove('active');
+
+    }
+
+    /**
+     * Generic Routing Adjustment */
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (localStorage.getItem('jwt') == null) {
             next({
@@ -131,7 +136,7 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-})
+});
 
 export default router;
 

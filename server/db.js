@@ -17,13 +17,14 @@ class Db {
          */
         this.db.connect(function (err) {
             if (err) {
-                return console.error('error connecting: ' + err.stack);
+                return console.error('DATABASE NOT CONNECTED: ' + err.stack);
             }
         });
     }
 
     selectByEmail(email, callback) {
         return this.db.query('SELECT * FROM users WHERE email = ?', email, (error, results) => {
+
             if (error) console.log(error);
 
             return callback(error, results[0]);
