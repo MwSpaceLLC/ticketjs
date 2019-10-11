@@ -16,8 +16,6 @@
 
 */
 
-import 'v-markdown-editor/dist/index.css';
-
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -26,14 +24,6 @@ import ArgonDashboard from './plugins/argon-dashboard'
 import Axios from 'axios'
 import config from "./config";
 import Notifications from 'vue-notification'
-
-// Vue.js Markdown Editor component.
-import Editor from 'v-markdown-editor'
-
-window.$ = require('jquery');
-window.JQuery = require('jquery');
-
-Vue.use(Editor);
 
 Vue.use(Notifications);
 
@@ -48,8 +38,6 @@ Vue.prototype.$api = domain;
 Vue.prototype.$InLoading = false;
 
 Vue.use(ArgonDashboard);
-
-Vue.prototype.$ticketEditorActive = false;
 
 new Vue({
     router,

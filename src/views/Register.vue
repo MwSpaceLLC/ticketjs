@@ -117,7 +117,7 @@
                         .catch(error => {
                             this.$InLoading = false;
 
-                            if(error.response){
+                            if (error.response) {
                                 return this.$notify({
                                     type: 'error',
                                     title: error.response.statusText,
@@ -148,4 +148,8 @@
     }
 </script>
 <style>
+    html,body {
+        background: #172b4d!important;
+    }
+
 </style>

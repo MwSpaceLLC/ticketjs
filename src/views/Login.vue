@@ -27,7 +27,8 @@
                             <span class="text-muted">Remember me</span>
                         </base-checkbox>
                         <div class="text-center">
-                            <base-button :disabled="this.$InLoading" @click="handleSubmit" type="primary" class="my-4">Accedi al sistema
+                            <base-button :disabled="this.$InLoading" @click="handleSubmit" type="primary" class="my-4">
+                                Accedi al sistema
                             </base-button>
                         </div>
                     </form>
@@ -81,7 +82,7 @@
                         .catch(error => {
                             this.$InLoading = false;
 
-                            if(error.response){
+                            if (error.response) {
                                 return this.$notify({
                                     type: 'error',
                                     title: error.response.statusText,
@@ -110,4 +111,7 @@
     }
 </script>
 <style>
+    html,body {
+        background: #172b4d!important;
+    }
 </style>
