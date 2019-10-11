@@ -1,5 +1,5 @@
 <template>
-    <tinymce-editor :init="config" v-model="content"></tinymce-editor>
+    <tinymce-editor :api-key="process.env." :init="config" v-model="content"></tinymce-editor>
 </template>
 
 <script>
