@@ -49,7 +49,97 @@ html {
   background: linear-gradient(87deg, #2dce89, #2dcecc) !important;
 }
 
-.ticket-reply{
+body {
+  background-color: transparent;
+}
+
+.footer {
+  z-index: -1;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 250px);
+  padding: 1rem;
+}
+
+.ticket-reply {
   border-radius: .3rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  opacity: 0.9;
+}
+
+.container-fluid.table {
+  margin-bottom: 5rem;
+}
+
+.ticket-editor {
+  background: transparent;
+}
+
+//a[href="https://froala.com/wysiwyg-editor"] {
+//  display: none;
+//}
+
+/* On screens that are 767px or less, set the background color to olive */
+@media screen and (max-width: 767px) {
+  .footer {
+    width: 100%;
+  }
+
+  .ticket-reply, .ticket-editor {
+    margin: 10px !important;
+  }
+}
+
+.modal-dialog.reply {
+  max-width: 1080px;
+}
+
+.modal.show {
+  background-color: unset !important;
+}
+
+.reply-editor {
+  z-index: 999;
+  bottom: -680px;
+  position: fixed;
+  width: calc(100% - 50px);
+  margin-left: 30px;
+  transition: .3s;
+  border: unset !important;
+  padding: 20px;
+  border-radius: .3rem;
+  background: transparent;
+  height: 480px;
+}
+
+.reply-editor.active {
+  bottom: 5px;
+}
+
+.tox-notifications-container {
+  display: none !important;
+  z-index: -1 !important;
+}
+
+.tox-tinymce {
+  border: unset !important;
+  border-radius: .4rem !important;
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important;
+}
+
+.tox .tox-toolbar, .tox .tox-toolbar__overflow, .tox .tox-toolbar__primary {
+  border-top: unset !important;
+}
+
+.tox .tox-edit-area {
+  border-top: unset !important;
+}
+
+.tox .tox-menu {
+  background-color: #fff !important;
+  border: unset !important;
+}
+
+.tox .tox-statusbar {
+  border-top: unset !important;
 }

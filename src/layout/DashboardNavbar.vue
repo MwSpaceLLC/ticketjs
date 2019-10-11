@@ -13,7 +13,7 @@
             </div>
         </form>
         <ul class="navbar-nav align-items-center d-none d-md-flex">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown cursor-pointer">
                 <base-dropdown class="nav-link pr-0">
                     <div class="media align-items-center" slot="title">
                 <span class="avatar avatar-sm rounded-circle">

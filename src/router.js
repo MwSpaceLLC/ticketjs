@@ -27,8 +27,9 @@ let router = new Router({
                 },
 
                 {
-                    path: '/ticket/:id',
-                    name: 'aperti',
+                    path: '/ticket/:ticket_id',
+                    name: 'ticket',
+                    props: true,
                     component: () => import(/* webpackChunkName: "demo" */ './views/Ticket.vue')
                 },
 
@@ -89,6 +90,20 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+
+    /**
+     * Create session user local
+     * @type {any}
+     */
+    var user = localStorage.getItem('user');
+    if (user)
+        if (!Vue.prototype.$user)
+            Vue.prototype.$user = JSON.parse(user);
+
+    /**
+     * Generic Routing Adjustment
+     * @type {any}
+     */
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (localStorage.getItem('jwt') == null) {
             next({
