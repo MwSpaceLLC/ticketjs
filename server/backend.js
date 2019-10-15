@@ -34,9 +34,11 @@ app.use(allowCrossDomain);
 router.get('/status', (req, res) => {
     res.status(200).send('server up');
 });
+/** ===================================================================================== */
 
 /**
- * Generi routes
+ * @register
+ * Register function for user
  */
 router.post('/register', function (req, res) {
 
@@ -46,7 +48,7 @@ router.post('/register', function (req, res) {
     if (req.body.passcode !== process.env.PASSCODE)
         return res.status(403).send('Passcode non corretta');
 
-    db.insert([
+    db.firstIinsert([
             req.body.email,
             bcrypt.hashSync(req.body.password, 8)
         ],
@@ -65,7 +67,12 @@ router.post('/register', function (req, res) {
             });
         });
 });
+/** ===================================================================================== */
 
+/**
+ * @login
+ * Login function for user
+ */
 router.post('/login', (req, res) => {
     db.selectByEmail(req.body.email, (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
@@ -83,6 +90,65 @@ router.post('/login', (req, res) => {
         res.status(200).send({auth: true, token: token, user: user});
     });
 });
+/** ===================================================================================== */
+
+/**
+ * @ticket
+ * Search ticket by key
+ */
+router.post('/post/ticket', (req, res) => {
+
+    /* @prepare OBJ as Array for Insert*/
+    var t = req.body.ticket;
+
+    // console.log(t)
+
+    db.insertNewTicket([
+        t.user_id,
+        t.category_id.value,
+        t.subject,
+        new Date().toJSON().slice(0, 10),
+        t.duelimit
+    ], (err, ticket) => {
+        if (err) return res.status(500).send('Error on the server.');
+
+        console.log('New Ticket Registred:');
+        console.log(ticket);
+
+        res.status(200).send(ticket);
+    });
+});
+router.get('/ticket/:status', (req, res) => {
+    var query = req.params.status;
+
+    db.selectTicketByStatus(query, (err, ticket) => {
+        if (err) return res.status(500).send('Error on the server.');
+
+        res.status(200).send(ticket);
+    });
+});
+/** ===================================================================================== */
+
+/**
+ * @categories
+ * Search default categories by key
+ */
+router.get('/categories/default', (req, res) => {
+    db.searchCatByDefault((err, categories) => {
+        if (err) return res.status(500).send('Error on the server.');
+
+        res.status(200).send(categories);
+    });
+});
+
+router.get('/categories/get', (req, res) => {
+    db.getCategory((err, categories) => {
+        if (err) return res.status(500).send('Error on the server.');
+
+        res.status(200).send(categories);
+    });
+});
+/** ===================================================================================== */
 
 app.use(router);
 

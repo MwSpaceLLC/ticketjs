@@ -7,8 +7,7 @@
                             type="gradient-red"
                             sub-title="350,897"
                             icon="ni ni-active-40"
-                            class="mb-4 mb-xl-0"
-                >
+                            class="mb-4 mb-xl-0" >
 
                     <template slot="footer">
                         <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
@@ -70,23 +69,37 @@
     </base-header>
 </template>
 <script>
+
+    import TicketEditor from "./TicketEditor";
+
     export default {
         name: "header-ticket",
         props: {
             ticket_id: String
         },
         methods: {
+            appendTeditor() {
+                var teditor = document.getElementById('reply-editor');
+
+                this.$storage.setItem('tinymce_content', '');
+                this.$storage.setItem('reply_tid', this.ticket_id);
+                document.getElementById('tid').innerText = this.ticket_id;
+
+                teditor.classList.remove('active');
+                teditor.classList.remove('mni-active');
+                teditor.classList.add('active');
+
+            },
             openTicket() {
 
                 // TODO make ticket management in localstorage
                 console.log('ticket select GET/: #' + this.ticket_id);
 
-                var teditor = document.getElementById('reply-editor');
+                var request = this.$localDB.open('localTickets');
 
-                if (teditor.classList.contains('active'))
-                    teditor.classList.remove('active');
-                else
-                    teditor.classList.add('active');
+                console.log(request);
+
+                this.appendTeditor();
             }
         }
     };

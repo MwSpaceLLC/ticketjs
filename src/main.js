@@ -12,56 +12,35 @@
  * Vue Argon Dashboard - v1.0.0
  =========================================================
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
  */
 
 import Vue from 'vue'
-import Axios from 'axios'
 import App from './App.vue'
 import router from './router'
-import config from "./config";
 import './registerServiceWorker'
-import * as firebase from "firebase";
-import Notifications from 'vue-notification'
-import ArgonDashboard from './plugins/argon-dashboard'
-
-Vue.use(Notifications);
+import store from './helpers/store'
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$http = Axios;
+require('./helpers/imports');
+require('./helpers/prototype');
+require('./helpers/fbase');
+require('./helpers/beforeEach');
 
-var domain = config.SSL === 'true' ? 'https' : 'http';
-domain += `://${window.location.hostname}:${config.SRV_PORT}`;
-Vue.prototype.$api = domain;
+const token = localStorage.getItem('token');
+if (token) {
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+}
 
-Vue.prototype.$InLoading = false;
-
-Vue.use(ArgonDashboard);
-
-/**
- * Init Firebase
- * @type {{storageBucket: string, apiKey: string, messagingSenderId: string, appId: string, projectId: string, measurementId: string, databaseURL: string, authDomain: string}}
- */
-
-var firebaseConfig = {
-    apiKey: process.env.VUE_APP_FIREBASEKEY,
-    authDomain: process.env.VUE_APP_FIREBASEDOMAIN,
-    databaseURL: process.env.VUE_APP_FIREBASEDATABASE,
-    projectId: process.env.VUE_APP_FIREBASEPROJECT,
-    storageBucket: process.env.VUE_APP_FIREBASESTORAGE,
-    messagingSenderId: process.env.VUE_APP_FIREBASESENDER,
-    appId: process.env.VUE_APP_FIREBASEAPP,
-    measurementId: process.env.VUE_APP_FIREBASEMEASUREMENT
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+if (!window.indexedDB) {
+    alert('Il tuo browser non supporta indexedDB. Perfavore aggiorna il browsere per utilizzare questo applicativo');
+}
 
 /**
  * Init Mine Application
  */
 new Vue({
+    store,
     router,
     render: h => h(App)
 }).$mount('#app');

@@ -46,12 +46,19 @@
 
             </div>
             <div class="col-xl-3 col-lg-6">
-                <stats-card title="Performance"
+                <stats-card title="Ticket Totali"
                             type="gradient-info"
-                            sub-title="49,65%"
-                            icon="ni ni-chart-bar-32"
-                            class="mb-4 mb-xl-0"
-                >
+                            sub-title="16"
+                            icon="ni ni-curved-next"
+                            class="mb-4 mb-xl-0">
+
+                    <template slot="icon">
+                        <router-link to="/new/ticket"
+                                     class="btn btn-tooltip btn-outline-danger">
+                            Nuovo Ticket
+                            <i class="ni ni-tag"></i>
+                        </router-link>
+                    </template>
 
                     <template slot="footer">
                         <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 54.8%</span>

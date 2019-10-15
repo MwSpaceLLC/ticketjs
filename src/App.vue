@@ -4,9 +4,10 @@
         <notifications/>
         <router-view/>
 
-        <div id="reply-editor" class="reply-editor card">
+        <div id="reply-editor" class="reply-editor card resized">
             <ticket-editor/>
         </div>
+
     </div>
 </template>
 
@@ -17,6 +18,26 @@
     export default {
         name: 'app',
         components: {ServerAlert, TicketEditor},
-        methods: {}
+        mounted() {
+            // var reply_tid = localStorage.getItem('reply_tid');
+            //
+            // var teditor = document.getElementById('reply-editor');
+            //
+            // if (this.$user && reply_tid) {
+            //     teditor.classList.remove('active');
+            //     teditor.classList.remove('mni-active');
+            //     teditor.classList.add('mni-active');
+            // }
+        },
+        created: function () {
+            this.$http.interceptors.response.use(undefined, function (err) {
+                return new Promise(function (resolve, reject) {
+                    if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+                        this.$store.dispatch(logout)
+                    }
+                    throw err;
+                });
+            });
+        }
     }
 </script>

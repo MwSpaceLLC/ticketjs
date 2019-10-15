@@ -51,65 +51,18 @@
         methods: {
             handleSubmit(e) {
                 e.preventDefault();
-
-                if (this.model.email.length > 0 && this.model.password.length > 0) {
-
-                    this.$InLoading = true;
-
-                    this.$http.post(`${this.$api}/login`, {
-                        email: this.model.email,
-                        password: this.model.password
-                    })
-                        .then(response => {
-
-                            this.$InLoading = false;
-
-                            localStorage.setItem('user', JSON.stringify(response.data.user));
-                            localStorage.setItem('jwt', response.data.token);
-
-                            if (localStorage.getItem('jwt') != null) {
-
-                                this.$emit('loggedIn');
-
-                                if (this.$route.params.nextUrl != null) {
-                                    this.$router.push(this.$route.params.nextUrl)
-                                } else {
-                                    this.$router.push('/')
-                                }
-
-                                return this.$notify({
-                                    type: 'success',
-                                    text: `Bentornato ${this.$user.email}`,
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            this.$InLoading = false;
-
-                            if (error.response) {
-                                return this.$notify({
-                                    type: 'error',
-                                    title: error.response.statusText,
-                                    text: error.response.data,
-                                });
-                            }
-
-                            return this.$notify({
-                                type: 'error',
-                                text: error,
-                            });
-
+                this.$store.dispatch('login', {
+                    email: this.model.email,
+                    password: this.model.password
+                })
+                    .then(() => this.$router.push('/'))
+                    .catch(err => {
+                        console.log(err);
+                        return this.$notify({
+                            type: 'error',
+                            text: err.message ? err.message : err,
                         });
-                } else {
-
-                    this.$InLoading = false;
-
-                    return this.$notify({
-                        type: 'warn',
-                        text: 'Email & Password sono obbligatorie',
-                    });
-
-                }
+                    })
             }
         }
     }

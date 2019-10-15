@@ -99,7 +99,7 @@ body {
 
 .reply-editor {
   z-index: 999;
-  bottom: -680px;
+  bottom: -850px;
   position: fixed;
   width: calc(100% - 50px);
   margin-left: 30px;
@@ -108,11 +108,15 @@ body {
   padding: 20px;
   border-radius: .3rem;
   background: transparent;
-  height: 480px;
+  height: 780px;
 }
 
 .reply-editor.active {
   bottom: 5px;
+}
+
+.reply-editor.mni-active {
+  bottom: -750px;
 }
 
 .tox-notifications-container {
@@ -141,4 +145,45 @@ body {
 
 .tox .tox-statusbar {
   border-top: unset !important;
+}
+
+.flip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.vs__dropdown-toggle {
+  border: unset !important;
+}
+
+.form-control, .input-group-text {
+  border: unset !important;
+}
+
+.input-group {
+  box-shadow: 0 1px 3px rgba(50, 50, 93, 0.15), 0 1px 0 rgba(0, 0, 0, 0.02) !important;
+}
+
+.style-chooser .vs__search::placeholder,
+.style-chooser .vs__dropdown-toggle,
+.style-chooser .vs__dropdown-menu {
+  background: #dfe5fb;
+  border: none;
+  color: #394066;
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+
+.style-chooser .vs__clear,
+.style-chooser .vs__open-indicator {
+  fill: #394066;
+}
+
+select {
+  border-color: transparent !important;
+  border-style: none !important;
+}
+
+.footer {
+  z-index: 99;
 }

@@ -56,18 +56,22 @@
     </base-nav>
 </template>
 <script>
+    import store from '../helpers/store';
+
     export default {
         data() {
             return {
                 activeNotifications: false,
                 showMenu: false,
-                searchQuery: ''
+                searchQuery: '',
             };
         },
         methods: {
             logout() {
-                localStorage.clear();
-                this.$router.push('/login')
+                this.$store.dispatch('logout')
+                    .then(() => {
+                        this.$router.push('/login')
+                    })
             },
             toggleSidebar() {
                 this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);

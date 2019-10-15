@@ -27,7 +27,7 @@
                 </template>
 
                 <template slot-scope="{row}">
-                    <th scope="row" @click="openTicket(row.id)">
+                    <th scope="row" @click="viewTicket(row.id)">
                         <div class="media align-items-center">
                             <span class="avatar rounded-circle mr-3">
                                 {{row.img}}
@@ -37,16 +37,16 @@
                             </div>
                         </div>
                     </th>
-                    <td class="budget" @click="openTicket(row.id)">
+                    <td class="budget" @click="viewTicket(row.id)">
                         {{row.budget}}
                     </td>
-                    <td @click="openTicket(row.id)">
+                    <td @click="viewTicket(row.id)">
                         <badge class="badge-dot mr-4" :type="row.statusType">
                             <i :class="`bg-${row.statusType}`"></i>
                             <span class="status">{{row.status}}</span>
                         </badge>
                     </td>
-                    <td @click="openTicket(row.id)">
+                    <td @click="viewTicket(row.id)">
                         <div class="avatar-group">
                             <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip"
                                data-original-title="Ryan Tompson">
@@ -66,7 +66,7 @@
                             </a>
                         </div>
                     </td>
-                    <td @click="openTicket(row.id)">
+                    <td @click="viewTicket(row.id)">
                         <div class="d-flex align-items-center">
                             <span class="completion mr-2">{{row.completion}}%</span>
                             <div>
@@ -85,6 +85,8 @@
     </div>
 </template>
 <script>
+    import axios from 'axios'
+
     export default {
         name: 'projects-table',
         props: {
@@ -96,95 +98,29 @@
             search: String
         },
         methods: {
-            openTicket(id) {
+            viewTicket(id) {
                 this.$router.push(`/ticket/${id}`)
             }
         },
-
+        data() {
+            return {
+                tableData: []
+            }
+        },
         mounted() {
 
             // TODO implement method get axoix to download correct dataset
-            console.log('search GET/: ' + this.search)
-        },
+            console.log('search GET/: ' + this.search);
 
-        data() {
-            return {
-                tableData: [
-                    {
-                        id: 1,
-                        img: 'CM',
-                        title: 'Argon Design System',
-                        budget: '$2500 USD',
-                        status: 'pending',
-                        statusType: 'warning',
-                        completion: 60
-                    },
-                    {
-                        id: 2,
-                        img: 'CB',
-                        title: 'Angular Now UI Kit PRO',
-                        budget: '$1800 USD',
-                        status: 'completed',
-                        statusType: 'success',
-                        completion: 100
-                    },
-                    {
-                        id: 3,
-                        img: 'MA',
-                        title: 'Black Dashboard',
-                        budget: '$3150 USD',
-                        status: 'delayed',
-                        statusType: 'danger',
-                        completion: 72
-                    },
-                    {
-                        id: 4,
-                        img: 'AI',
-                        title: 'React Material Dashboard',
-                        budget: '$4400 USD',
-                        status: 'on schedule',
-                        statusType: 'info',
-                        completion: 90
-                    },
-                    {
-                        id: 5,
-                        img: 'PB',
-                        title: 'Vue Paper UI Kit PRO',
-                        budget: '$2200 USD',
-                        status: 'completed',
-                        statusType: 'success',
-                        completion: 100
-                    },
-                    {
-                        id: 6,
-                        img: 'PB',
-                        title: 'Vue Paper UI Kit PRO',
-                        budget: '$2200 USD',
-                        status: 'completed',
-                        statusType: 'success',
-                        completion: 100
-                    },
-                    {
-                        id: 7,
-                        img: 'PB',
-                        title: 'Vue Paper UI Kit PRO',
-                        budget: '$2200 USD',
-                        status: 'completed',
-                        statusType: 'success',
-                        completion: 100
-                    },
-                    {
-                        id: 8,
-                        img: 'PB',
-                        title: 'Vue Paper UI Kit PRO',
-                        budget: '$2200 USD',
-                        status: 'completed',
-                        statusType: 'success',
-                        completion: 100
-                    }
-                ]
-            }
-        }
+            axios.get(`${this.$api}/ticket/` + this.search)
+                .then(resp => {
+                    this.tableData = resp.data
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+        },
     }
 </script>
 <style lang="scss">
