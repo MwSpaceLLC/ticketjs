@@ -142,7 +142,8 @@ router.post('/post/ticket', (req, res, next) => {
     });
 });
 
-/** get ticket status */
+/** @Tocket Auth
+ * get ticket status */
 router.get('/ticket/:status', (req, res, next) => {
 
     let query = req.params.status,
