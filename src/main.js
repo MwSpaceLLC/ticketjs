@@ -19,6 +19,8 @@ import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'
 import store from './helpers/store'
+import axios from "axios";
+import config from "./config";
 
 Vue.config.productionTip = false;
 
@@ -27,17 +29,18 @@ require('./helpers/prototype');
 require('./helpers/fbase');
 require('./helpers/beforeEach');
 
-const token = localStorage.getItem('token');
-if (token) {
-    Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
+const token = localStorage.getItem('token'),
+    session = localStorage.getItem('session');
 
-if (!window.indexedDB) {
-    alert('Il tuo browser non supporta indexedDB. Perfavore aggiorna il browsere per utilizzare questo applicativo');
-}
+if (token)
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
+
+if (session)
+    Vue.prototype.$http.defaults.headers.common['Session'] = session;
 
 /**
  * Init Mine Application
+ * @vue Application
  */
 new Vue({
     store,

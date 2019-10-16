@@ -51,11 +51,13 @@ The ticketJs is open-source software licensed under the [MIT license](https://op
 
         yarn dev
     
-    
 ### 🔫 Trick & Knows
 
+U 16/10/19
+- Session Auth mysql control from scratch
+- Session Axios control from scratch
+
 U 11/10/19
-- Push, Notification & realtime mess in Firebase
 - Session reply unlost localstorage mode
 - Support csurf (csrf protection)
 - Added TinyMCE for ticket reply

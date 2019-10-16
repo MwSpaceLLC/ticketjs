@@ -1,7 +1,7 @@
 "use strict";
 
-const dotenv = require('dotenv').config();
-const mysql = require('mysql');
+var dotenv = require('dotenv').config(),
+    mysql = require('mysql'), sql;
 
 class Db {
     constructor() {
@@ -10,7 +10,8 @@ class Db {
             user: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
-            port: process.env.DB_PORT
+            port: process.env.DB_PORT,
+            charset: 'utf8mb4'
         });
 
         /**
@@ -20,6 +21,20 @@ class Db {
             if (err) {
                 return console.error('DATABASE NOT CONNECTED: ' + err.stack);
             }
+        });
+    }
+
+    getUserBySess(token, callback) {
+        return this.db.query('SELECT * FROM users JOIN user_session ON users.id = user_session.user_id WHERE token = ?', token, (error, results) => {
+            if (error) console.log(error);
+            return callback(error, results);
+        });
+    }
+
+    setSession(session, callback) {
+        return this.db.query('INSERT INTO user_session (user_id,token,ip_address, user_agent) VALUES (?,?,?,?)', session, (error, results) => {
+            if (error) console.log(error);
+            return callback(error, results);
         });
     }
 
@@ -42,8 +57,18 @@ class Db {
      * @status: received / expired / opened / closed / collect
      * @limit: 50
      */
-    selectTicketByStatus(query, callback) {
-        var ticket = this.db.query('SELECT * FROM tickets WHERE status = ? LIMIT 50', query, (error, results) => {
+    selectTicketByStatus(user, query, callback) {
+
+        switch (query) {
+            case 'opened':
+                sql = 'SELECT * FROM tickets WHERE status = ? LIMIT 50';
+                break;
+            default:
+                sql = 'SELECT * FROM tickets WHERE 1 LIMIT 50';
+                break;
+        }
+
+        this.db.query(sql, query, (error, results) => {
             if (error) console.log(error);
             return callback(error, results);
         });

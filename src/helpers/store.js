@@ -9,6 +9,7 @@ export default new Vuex.Store({
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
+        session: localStorage.getItem('session') || '',
         user: JSON.parse(localStorage.getItem('user')) || {}
     },
     mutations: {
@@ -39,11 +40,15 @@ export default new Vuex.Store({
                     .then(resp => {
                         const token = resp.data.token;
                         const user = resp.data.user;
+                        const session = resp.data.session;
 
                         localStorage.setItem('token', token);
                         localStorage.setItem('user', JSON.stringify(user));
 
                         axios.defaults.headers.common['Authorization'] = token;
+
+                        localStorage.setItem('session', session);
+                        axios.defaults.headers.common['Session'] = session;
 
                         commit('auth_success', token, user);
                         resolve(resp)
@@ -63,11 +68,16 @@ export default new Vuex.Store({
                     .then(resp => {
                         const token = resp.data.token;
                         const user = resp.data.user;
+                        const session = resp.data.session;
 
                         localStorage.setItem('token', token);
                         localStorage.setItem('user', JSON.stringify(user));
 
                         axios.defaults.headers.common['Authorization'] = token;
+
+                        localStorage.setItem('session', session);
+                        axios.defaults.headers.common['Session'] = session;
+
                         commit('auth_success', token, user);
                         resolve(resp)
                     })

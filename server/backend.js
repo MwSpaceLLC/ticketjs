@@ -1,16 +1,17 @@
 "use strict";
-const dotenv = require('dotenv').config();
-const express = require('express');
-const DB = require('./db');
-const config = require('./config');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const bodyParser = require('body-parser');
 
-const db = new DB("./server/sqlite/sqlitedb");
-
-const app = express();
-const router = express.Router();
+const dotenv = require('dotenv').config(),
+    express = require('express'),
+    DB = require('./db'),
+    config = require('./config'),
+    bcrypt = require('bcrypt'),
+    jwt = require('jsonwebtoken'),
+    bodyParser = require('body-parser'),
+    db = new DB("./server/sqlite/sqlitedb"),
+    app = express(),
+    router = express.Router(),
+    crypto = require('crypto'),
+    authSession = require('./authSessionToken');
 
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
@@ -31,7 +32,7 @@ app.use(allowCrossDomain);
 
 // TODO must refactoring
 
-router.get('/status', (req, res) => {
+router.get('/status', (req, res, next) => {
     res.status(200).send('server up');
 });
 /** ===================================================================================== */
@@ -40,7 +41,7 @@ router.get('/status', (req, res) => {
  * @register
  * Register function for user
  */
-router.post('/register', function (req, res) {
+router.post('/register', (req, res, next) => {
 
     console.log('User Registred:');
     console.log(req.body);
@@ -63,7 +64,18 @@ router.post('/register', function (req, res) {
                     expiresIn: 86400 // expires in 24 hours
                 });
 
-                res.status(200).send({auth: true, token: token, user: user});
+                var authSessionToken = authSession.Token();
+
+                db.setSession([
+                    user.id,
+                    authSessionToken,
+                    req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                    req.headers['user-agent'] || null
+                ], (err, ticket) => {
+                    if (err) res.status(500).send('Error to store REGISTER session on the server');
+                });
+
+                res.status(200).send({auth: true, token: token, user: user, session: authSessionToken});
             });
         });
 });
@@ -73,7 +85,7 @@ router.post('/register', function (req, res) {
  * @login
  * Login function for user
  */
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
     db.selectByEmail(req.body.email, (err, user) => {
         if (err) return res.status(500).send('Error on the server.');
 
@@ -87,7 +99,18 @@ router.post('/login', (req, res) => {
             expiresIn: 86400 // expires in 24 hours
         });
 
-        res.status(200).send({auth: true, token: token, user: user});
+        var authSessionToken = authSession.Token();
+
+        db.setSession([
+            user.id,
+            authSessionToken,
+            req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+            req.headers['user-agent'] || null
+        ], (err, ticket) => {
+            if (err) res.status(500).send('Error to store LOGIN session on the server');
+        });
+
+        res.status(200).send({auth: true, token: token, user: user, session: authSessionToken});
     });
 });
 /** ===================================================================================== */
@@ -96,12 +119,12 @@ router.post('/login', (req, res) => {
  * @ticket
  * Search ticket by key
  */
-router.post('/post/ticket', (req, res) => {
+router.post('/post/ticket', (req, res, next) => {
 
     /* @prepare OBJ as Array for Insert*/
     var t = req.body.ticket;
 
-    // console.log(t)
+    console.log(t);
 
     db.insertNewTicket([
         t.user_id,
@@ -118,14 +141,28 @@ router.post('/post/ticket', (req, res) => {
         res.status(200).send(ticket);
     });
 });
-router.get('/ticket/:status', (req, res) => {
-    var query = req.params.status;
 
-    db.selectTicketByStatus(query, (err, ticket) => {
+/** get ticket status */
+router.get('/ticket/:status', (req, res, next) => {
+
+    let query = req.params.status,
+        token = req.headers.session,
+        user;
+
+    db.getUserBySess(token, (err, session) => {
         if (err) return res.status(500).send('Error on the server.');
+        if (!session.length) return res.status(403).send('token mismatch');
 
-        res.status(200).send(ticket);
+        // TODO Continue Query
+        return console.log(session[0]);
+
+        db.selectTicketByStatus(session, query, (err, ticket) => {
+            if (err) return res.status(500).send('Error on the server.');
+
+            res.status(200).send(ticket);
+        });
     });
+
 });
 /** ===================================================================================== */
 
