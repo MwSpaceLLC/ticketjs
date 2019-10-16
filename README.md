@@ -54,8 +54,7 @@ The ticketJs is open-source software licensed under the [MIT license](https://op
 ### 🔫 Trick & Knows
 
 U 16/10/19
-- Session Auth mysql control from scratch
-- Session Axios control from scratch
+- Session Auth Token control from scratch
 
 U 11/10/19
 - Session reply unlost localstorage mode
